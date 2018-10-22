@@ -1,9 +1,11 @@
 package org.kidding.controller;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.junit.Test;
-import org.kidding.domain.Todo;
-import org.kidding.mapper.TimeMapper;
-import org.kidding.mapper.TodoMapper;
+import org.kidding.domain.PageParam;
+import org.kidding.mapper.BoardMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import lombok.Setter;
@@ -12,44 +14,66 @@ import lombok.extern.log4j.Log4j;
 @Log4j
 public class TimeMapperTests extends AbstractTests {
 	
-	@Setter(onMethod_=@Autowired)
-	private TimeMapper mapper;
+//	@Setter(onMethod_=@Autowired)
+//	private TimeMapper mapper;
+//	
+//	@Setter(onMethod_=@Autowired)
+//	private TodoMapper todoMapper;
 	
 	@Setter(onMethod_=@Autowired)
-	private TodoMapper todoMapper;
-	
-	//TimeMapper´Â ÀÎÅÍÆäÀÌ½ºÀÎµ¥ ¾î¶»°Ô µ¿ÀÛÇß³ª?
-	//½ºÇÁ¸µÀÌ ÀÎÅÍÆäÀÌ½º¿¡ ¸Â´Â Å¬·¡½º¸¦ »ý¼ºÇÔ. ÄÚµå¸¦ ¸¸µéÁö ¾Ê¾Æµµ ³»ºÎÀûÀ¸·Î ¸¸µé¾î³¿. 
-	@Test
-	public void testTime() {
-		log.info(mapper.getTime());
-	}
+	private BoardMapper mapper;
 	
 	@Test
-	public void testTime2() {
-		log.info(mapper.getTime2());
-	}
-	
-	@Test
-	public void testTodo() {
-		log.info(todoMapper.select());
-	}
-	
-	@Test
-	public void testInsert(){
-		todoMapper.insert("ºí¶óºí¶óºí¶ó");
-	}
-	
-	@Test
-	public void testDelete() {
-		todoMapper.delete(3);
-	}
-	
-	@Test
-	public void testUpdate() {
+	public void testSearch() {
 		
-		Todo todo = todoMapper.select().get(1);
-		todo.setTitle("¼öÁ¤ÇÕ´Ï´Ù.");
-		todoMapper.update(todo);
+		PageParam pageParam = new PageParam();
+//		pageParam.setScond("tc");
+//		pageParam.setKeyword("ì•„ë†”ì§„ì§œ");
+		
+//		Map<String, String> cond = new HashMap<>();
+//		cond.put("t", "test");
+//		cond.put("c", "sample");
+		
+//		pageParam.setTypes(new String[] {"t"});
+		pageParam.setKeyword("sample");
+		
+		pageParam.setExtend(false);
+		
+		log.info(mapper.search(pageParam));
+		log.info(mapper.searchCount(pageParam));
 	}
+//	//TimeMapperï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ì½ï¿½ï¿½Îµï¿½ ï¿½î¶»ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ß³ï¿½?
+//	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ì½ï¿½ï¿½ï¿½ ï¿½Â´ï¿½ Å¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½. ï¿½Úµå¸¦ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ê¾Æµï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½î³¿. 
+//	@Test
+//	public void testTime() {
+//		log.info(mapper.getTime());
+//	}
+//	
+//	@Test
+//	public void testTime2() {
+//		log.info(mapper.getTime2());
+//	}
+//	
+//	@Test
+//	public void testTodo() {
+//		log.info(todoMapper.select());
+//	}
+//	
+//	@Test
+//	public void testInsert(){
+//		todoMapper.insert("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
+//	}
+//	
+//	@Test
+//	public void testDelete() {
+//		todoMapper.delete(3);
+//	}
+//	
+//	@Test
+//	public void testUpdate() {
+//		
+//		Todo todo = todoMapper.select().get(1);
+//		todo.setTitle("ï¿½ï¿½ï¿½ï¿½ï¿½Õ´Ï´ï¿½.");
+//		todoMapper.update(todo);
+//	}
 }
