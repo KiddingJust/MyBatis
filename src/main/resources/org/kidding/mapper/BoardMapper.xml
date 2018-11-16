@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- 이게 있어야 ctrl + spacebar가 된다. -->
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- namespace이름은 인터페이스와 동일하게 줘야 인식한다. -->
+<!-- concat은 문자열을 합치는 기능이다. -->
+<!-- 검색에서 쿼리의 성능을 높이기 위해 하는 방법 1. 캐싱(자주 이용하는 검색조건에 해당되는 걸 미리 저장해놓는다.) 2. 
+   범위를 줄이는 것 (최근 10만건, 최근 1개월로 한 다음 추가적으로 더 검색하시겠습니까?) -->
+
+<mapper namespace="org.kidding.mapper.BoardMapper">
+
+   <select id="search" resultType="org.kidding.domain.BoardVO">
+      select * from tbl_board
+
+    <where>
+      <if test="!extend">
+         and bno > (select max(bno) - 100 from tbl_board)
+      </if>
+	</where>
+ 	
+	    <foreach item="item" collection="types" open="AND (" close=")" separator="OR">
+         <if test="item=='t'.toString()">
+            title like #{keyword}
+         </if>
+         <if test="item=='c'.toString()">
+            content like #{keyword}
+         </if>
+        <if test="item == 'w'.toString()">
+		writer like concat('%', #{keyword}, '%')
+		</if>
+      </foreach>
+
+      order by bno desc
+      limit 0, 10
+   </select>
+   
+   <select id="searchCount" resultType="int">
+      select count(*) from tbl_board
+        <where>
+      <if test="!extend">
+         and bno > (select max(bno) - 100 from tbl_board)
+      </if>
+      <foreach item="item" collection="types" open="AND (" close=")" separator="OR">
+         <if test="item=='t'.toString()">
+            title like #{keyword}
+         </if>
+         <if test="item=='c'.toString()">
+            content like #{keyword}
+         </if>
+        <if test="item == 'w'.toString()">
+		writer like concat('%', #{keyword}, '%')
+		</if>
+      </foreach>
+      
+	</where>
+   </select>
+
+</mapper>

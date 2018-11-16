@@ -34,7 +34,7 @@ public class TimeMapperTests extends AbstractTests {
 //		cond.put("t", "test");
 //		cond.put("c", "sample");
 		
-//		pageParam.setTypes(new String[] {"t"});
+		pageParam.setType("t");
 		pageParam.setKeyword("sample");
 		
 		pageParam.setExtend(false);
